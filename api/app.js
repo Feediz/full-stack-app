@@ -4,6 +4,8 @@
 const express = require("express");
 const morgan = require("morgan");
 
+const cors = require("cors");
+
 const { sequelize } = require("./models");
 
 // user routes
@@ -29,6 +31,10 @@ const enableGlobalErrorLogging =
 
 // create the Express app
 const app = express();
+
+// Enable all CORS Request
+app.use(cors());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
