@@ -1,18 +1,32 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const Header = () => {
+const Header = (props) => {
+  const { context } = props;
+  console.dir(context);
+  const authUser = context.authenticatedUser;
+
   return (
     <header className="App-header">
       <div className="header">
         <div className="bounds">
           <h1 className="header--logo">Courses</h1>
           <nav>
-            <a className="signup" href="sign-up.html">
-              Sign Up
-            </a>
-            <a className="signin" href="sign-in.html">
-              Sign In
-            </a>
+            {authUser ? (
+              <React.Fragment>
+                <span> Welcome, {authUser.name}</span>
+                <Link to="/signout">Sign Out</Link>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <Link to="/signup" className="signup">
+                  Sign Up
+                </Link>
+                <Link to="/signin" className="signin">
+                  Sign In
+                </Link>
+              </React.Fragment>
+            )}
           </nav>
         </div>
       </div>
