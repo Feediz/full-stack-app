@@ -14,7 +14,7 @@ const Header = (props) => {
           <nav>
             {authUser ? (
               <React.Fragment>
-                <span> Welcome, {authUser.name}</span>
+                <span> Welcome, {authUser.firstName}</span>
                 <Link to="/signout">Sign Out</Link>
               </React.Fragment>
             ) : (
