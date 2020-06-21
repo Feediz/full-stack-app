@@ -1,86 +1,151 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import Form from "./Form";
 
 class UserSignUp extends Component {
-  render() {
-    return (
-      <div class="bounds">
-        <div class="grid-33 centered signin">
-          <h1>Sign Up</h1>
+  state = {
+    firstName: "",
+    lastName: "",
+    emailAddress: "",
+    password: "",
+    confirmPassword: "",
+    errors: [],
+  };
 
-          <div>
-            <form>
-              <div>
+  render() {
+    const {
+      firstName,
+      lastName,
+      emailAddress,
+      password,
+      confirmPassword,
+      errors,
+    } = this.state;
+
+    return (
+      <div className="bounds">
+        <div className="grid-33 centered signin">
+          <h1>Sign Up</h1>
+          <Form
+            cancel={this.cancel}
+            errors={errors}
+            submit={this.submit}
+            submitButtonText="Sign Up"
+            elements={() => (
+              <React.Fragment>
                 <input
                   id="firstName"
                   name="firstName"
                   type="text"
-                  class=""
+                  className=""
                   placeholder="First Name"
-                  value=""
+                  value={firstName}
+                  onChange={this.change}
                 />
-              </div>
-              <div>
+
                 <input
                   id="lastName"
                   name="lastName"
                   type="text"
-                  class=""
+                  className=""
                   placeholder="Last Name"
-                  value=""
+                  value={lastName}
+                  onChange={this.change}
                 />
-              </div>
-              <div>
+
                 <input
                   id="emailAddress"
                   name="emailAddress"
                   type="text"
-                  class=""
+                  className=""
                   placeholder="Email Address"
-                  value=""
+                  value={emailAddress}
+                  onChange={this.change}
                 />
-              </div>
-              <div>
+
                 <input
                   id="password"
                   name="password"
                   type="password"
-                  class=""
+                  className=""
+                  autoComplete="off"
                   placeholder="Password"
-                  value=""
+                  value={password}
+                  onChange={this.change}
                 />
-              </div>
-              <div>
+
                 <input
                   id="confirmPassword"
                   name="confirmPassword"
                   type="password"
-                  class=""
+                  className=""
+                  autoComplete="off"
                   placeholder="Confirm Password"
-                  value=""
+                  value={confirmPassword}
+                  onChange={this.change}
                 />
-              </div>
-              <div class="grid-100 pad-bottom">
-                <button class="button" type="submit">
-                  Sign Up
-                </button>
-                <button
-                  class="button button-secondary"
-                  onclick="event.preventDefault(); location.href='index.html';"
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
-          <p>&nbsp;</p>
+              </React.Fragment>
+            )}
+          />
           <p>
-            Already have a user account? <a href="sign-in.html">Click here</a>{" "}
-            to sign in!
+            Already have a user account? <Link to="/signin">Click here</Link> to
+            sign in!
           </p>
         </div>
       </div>
     );
   }
+  change = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+
+    this.setState(() => {
+      return {
+        [name]: value,
+      };
+    });
+  };
+
+  submit = () => {
+    const { context } = this.props;
+    const {
+      firstName,
+      lastName,
+      emailAddress,
+      password,
+      confirmPassword,
+    } = this.state;
+
+    const user = {
+      firstName,
+      lastName,
+      emailAddress,
+      password,
+      confirmPassword,
+    };
+
+    context.apiData
+      .createUser(user)
+      .then((errors) => {
+        if (errors.length) {
+          this.setState({ errors });
+        } else {
+          console.log(`User ${emailAddress} was successfully set up.`);
+          context.actions.signIn(emailAddress, password).then(() => {
+            this.props.history.push("/authenticated");
+          });
+        }
+      })
+      .catch((err) => {
+        // handle rejected promises
+        console.log(err);
+        this.props.history.push("/error"); // push to history stack
+      });
+  };
+
+  cancel = () => {
+    this.props.history.push("/");
+  };
 }
 
 export default UserSignUp;
