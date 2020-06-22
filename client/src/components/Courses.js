@@ -1,31 +1,48 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class Courses extends Component {
+  state = {
+    courses: [],
+    errors: [],
+  };
+
+  componentDidMount() {
+    const { context } = this.props;
+
+    context.apiData
+      .getCourses()
+      .then((courses) => {
+        if (courses) {
+          this.setState({ courses });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        this.props.history.push("/error");
+      });
+  }
   render() {
+    const allCourses = this.state.courses.map((course) => (
+      <div className="grid-33" key={course.id}>
+        <Link
+          className="course--module course--link"
+          to={`/courses/${course.id}`}
+        >
+          <h4 className="course--label">Course</h4>
+          <h3 className="course--title">{course.title}</h3>
+        </Link>
+      </div>
+    ));
+
     return (
       <div className="bounds">
+        {allCourses}
+
         <div className="grid-33">
-          <a className="course--module course--link" href="course-detail.html">
-            <h4 className="course--label">Course</h4>
-            <h3 className="course--title">Build a Basic Bookcase</h3>
-          </a>
-        </div>
-        <div className="grid-33">
-          <a className="course--module course--link" href="course-detail.html">
-            <h4 className="course--label">Course</h4>
-            <h3 className="course--title">Learn How to Program</h3>
-          </a>
-        </div>
-        <div className="grid-33">
-          <a className="course--module course--link" href="course-detail.html">
-            <h4 className="course--label">Course</h4>
-            <h3 className="course--title">Learn How to Test Programs</h3>
-          </a>
-        </div>
-        <div className="grid-33">
-          <a
+          <Link
             className="course--module course--add--module"
-            href="create-course.html"
+            to="/courses/create"
           >
             <h3 className="course--add--title">
               <svg
@@ -40,7 +57,7 @@ class Courses extends Component {
               </svg>
               New Course
             </h3>
-          </a>
+          </Link>
         </div>
       </div>
     );

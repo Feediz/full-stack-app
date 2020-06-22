@@ -18,6 +18,7 @@ export class Provider extends Component {
     const value = {
       authenticatedUser,
       apiData: this.apiData,
+      getCourses: this.getCourses,
       actions: {
         signIn: this.signIn,
         signOut: this.signOut,
@@ -41,6 +42,11 @@ export class Provider extends Component {
       Cookies.set("authenticatedUser", JSON.stringify(user), { expires: 1 });
     }
     return user;
+  };
+
+  getCourses = async () => {
+    const courses = await this.apiData.getCourses();
+    return courses;
   };
 
   signOut = () => {

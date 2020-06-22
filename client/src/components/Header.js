@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 const Header = (props) => {
   const { context } = props;
-  console.dir(context);
   const authUser = context.authenticatedUser;
 
   return (
