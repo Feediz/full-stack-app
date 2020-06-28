@@ -11,7 +11,10 @@ class CourseDetail extends Component {
   componentDidMount() {
     const { context } = this.props;
     const authorInfo = context.authenticatedUser;
-    const author = authorInfo.firstName + " " + authorInfo.lastName;
+    let author = null;
+    if (authorInfo) {
+      author = authorInfo.firstName + " " + authorInfo.lastName;
+    }
 
     context.apiData
       .getCourse(this.props.match.params.id)

@@ -44,8 +44,8 @@ class UserSignIn extends Component {
             )}
           />
           <p>
-            Don't have a user account? <Link to="sign-up.html">Click here</Link>{" "}
-            to sign up!
+            Don't have a user account? <Link to="/signup">Click here</Link> to
+            sign up!
           </p>
         </div>
       </div>
