@@ -55,6 +55,17 @@ export default class ApiData {
     }
   }
 
+  async updateCourse(id, newData) {
+    const response = await this.api(`/courses/${id}`, "PUT", newData, true);
+    if (response.status === 200) {
+      return response.json().then((data) => data);
+    } else if (response.status === 401) {
+      return null;
+    } else {
+      throw new Error();
+    }
+  }
+
   async getUser(username, password) {
     const response = await this.api(`/users`, "GET", null, true, {
       username,

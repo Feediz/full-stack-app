@@ -42,7 +42,7 @@ class CourseDetail extends Component {
               <span>
                 <Link
                   className="button"
-                  to={`/courses/${this.state.courseDetail.id}`}
+                  to={`/courses/${this.state.courseDetail.id}/update`}
                 >
                   Update Course
                 </Link>
