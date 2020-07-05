@@ -35,6 +35,7 @@ router.get(
       userInfo.firstName = user.firstName;
       userInfo.lastName = user.lastName;
       userInfo.emailAddress = user.emailAddress;
+      userInfo.id = user.id;
       res.json(userInfo);
     }
   })

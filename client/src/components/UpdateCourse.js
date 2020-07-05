@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import Form from "./Form";
 
 class UpdateCourse extends Component {
@@ -137,9 +136,23 @@ class UpdateCourse extends Component {
 
   submit = () => {
     const { context } = this.props;
-    const { courseDetail } = this.state;
+    let { title, description, estimatedTime, materialsNeeded } = this.state;
+    let id = this.state.courseDetail.id;
+    const userId = context.authenticatedUser.id;
+    let courseDetail = {
+      id,
+      title,
+      description,
+      estimatedTime,
+      materialsNeeded,
+      userId,
+    };
+    console.log("UpdateCourse");
+    console.dir(courseDetail);
+    const userDetail = context.authenticatedUser;
+
     context.apiData
-      .updateCourse(this.props.match.params.id, courseDetail)
+      .updateCourse(this.props.match.params.id, courseDetail, userDetail)
       .then(() => {
         console.log(`Course updated`);
       })

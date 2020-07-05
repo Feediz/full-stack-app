@@ -27,7 +27,8 @@ class CourseDetail extends Component {
         }
       })
       .catch((error) => {
-        console.error(error);
+        console.log("CourseDetail.js");
+        console.dir(error);
         this.setState({ errors: error });
         this.props.history.push("/error");
       });

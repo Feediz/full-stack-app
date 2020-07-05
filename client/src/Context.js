@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import Cookies from "js-cookie";
+import Cryptr from "cryptr";
 
 import ApiData from "./ApiData";
 
 const Context = React.createContext();
+
+const cryptr = new Cryptr("846F7A254644FA21D9B1D844BA8E7");
 
 export class Provider extends Component {
   constructor() {
@@ -32,6 +35,7 @@ export class Provider extends Component {
   signIn = async (emailAddress, password) => {
     const user = await this.apiData.getUser(emailAddress, password);
     if (user !== null) {
+      user.p = cryptr.encrypt(password);
       this.setState(() => {
         return {
           authenticatedUser: user,

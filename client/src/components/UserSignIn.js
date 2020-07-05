@@ -6,6 +6,7 @@ class UserSignIn extends Component {
   state = {
     emailAddress: "",
     password: "",
+    id: -1,
     errors: [],
   };
   render() {
@@ -74,7 +75,7 @@ class UserSignIn extends Component {
       .then((user) => {
         if (user === null) {
           this.setState(() => {
-            return { errors: ["Sign-in was unsuccessful"] };
+            return { errors: ["Signdsf-in was unsuccessful"] };
           });
         } else {
           console.log(`Success! ${emailAddress} is now signed in.`);
