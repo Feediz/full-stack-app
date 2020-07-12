@@ -70,12 +70,13 @@ export default class ApiData {
       username,
       password,
     });
+    console.log(`sadlfjalsdfkjadlsfj: ${response.status}`);
     if (response.status === 200) {
       return response.json().then((data) => data);
     } else if (response.status === 401) {
       return null;
     } else if (response.status === 403) {
-      return null;
+      return response.json().then((data) => data);
     } else {
       throw new Error();
     }
