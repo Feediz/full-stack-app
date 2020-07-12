@@ -74,6 +74,8 @@ export default class ApiData {
       return response.json().then((data) => data);
     } else if (response.status === 401) {
       return null;
+    } else if (response.status === 403) {
+      return null;
     } else {
       throw new Error();
     }

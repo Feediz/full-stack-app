@@ -145,11 +145,12 @@ router.put(
 
         // if requestor is as owner, allow update
         if (requestorUserId === courseOwnerId) {
+          res.status(200).json({ msg: req.body });
           await course.update(req.body);
-          res.status(204).send("");
+          res.status(204).end();
         } else {
           // requestor not authenticated to make changes
-          res.status(403).send("");
+          res.status(403).send({ message: "Permission denied" });
         }
       } else {
         // course not found

@@ -152,9 +152,14 @@ class UpdateCourse extends Component {
     const userDetail = context.authenticatedUser;
 
     context.apiData
-      .updateCourse(this.props.match.params.id, courseDetail, userDetail)
-      .then(() => {
-        console.log(`Course updated`);
+      .updateCourse(id, courseDetail, userDetail)
+      .then((errors) => {
+        if (errors) {
+          this.setState({ errors });
+        } else {
+          console.log(`Course updated`);
+          this.props.history.push(`/courses/${id}`);
+        }
       })
       .catch((err) => {
         console.error(err);
