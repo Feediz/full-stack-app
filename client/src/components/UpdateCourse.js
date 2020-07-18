@@ -155,7 +155,7 @@ class UpdateCourse extends Component {
       .updateCourse(id, courseDetail, userDetail)
       .then((errors) => {
         if (errors) {
-          console.log(`There is an error | ${errors}`);
+          console.log(`There is an error | ${errors.message}`);
           this.setState({ errors });
         } else {
           console.log(`Course updated | ${errors}`);

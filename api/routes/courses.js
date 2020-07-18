@@ -150,7 +150,7 @@ router.put(
           res.status(204).end();
         } else {
           // requestor not authenticated to make changes
-          res.status(403).send({ message: "Permission denied" });
+          res.status(403).json({ errors: "Permission denied" });
         }
       } else {
         // course not found
