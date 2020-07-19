@@ -22,8 +22,6 @@ export default class ApiData {
 
     if (body != null) {
       options.body = JSON.stringify(body);
-      console.log("ApiData:25");
-      console.log(options.body);
     }
     // check if auth is required
     if (requiresAuth) {
@@ -55,6 +53,8 @@ export default class ApiData {
         return await response.json().then((data) => data);
       } else if (response.status === 401) {
         return null;
+      } else if (response.status === 404) {
+        return "Not found";
       } else {
         throw new Error();
       }
@@ -70,7 +70,7 @@ export default class ApiData {
       username,
       password,
     });
-    console.log(`sadlfjalsdfkjadlsfj: ${response.status}`);
+
     if (response.status === 204) {
       // return response.json().then((data) => data);
       return null;

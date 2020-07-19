@@ -64,7 +64,11 @@ router.get(
       },
     });
     //delete courses.dataValues.password;
-    res.send(courses);
+    if (courses) {
+      res.send(courses);
+    } else {
+      res.status(404).json({ errors: "Not found" });
+    }
   })
 );
 

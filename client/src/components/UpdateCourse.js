@@ -9,16 +9,23 @@ class UpdateCourse extends Component {
     materialsNeeded: "",
     userId: 0,
     author: "",
+    authorEmail: "",
     errors: [],
   };
 
   componentDidMount() {
     const { context } = this.props;
+    const authenticatedUserEmail = context.authenticatedUser.emailAddress;
 
     context.apiData
       .getCourse(this.props.match.params.id)
       .then((course) => {
-        if (course) {
+        if (course && course.user.emailAddress !== authenticatedUserEmail) {
+          this.props.history.push("/forbidden");
+          return null;
+        }
+
+        if (course && course !== "Not found") {
           this.setState({
             courseDetail: course,
             title: course.title,
@@ -26,8 +33,12 @@ class UpdateCourse extends Component {
             estimatedTime: course.estimatedTime,
             materialsNeeded: course.materialsNeeded,
             userId: course.userId,
+            //authenticatedUserEmail,
             author: course.user.firstName + " " + course.user.lastName,
           });
+        } else {
+          console.log("Course not found");
+          this.props.history.push("/notfound");
         }
       })
       .catch((error) => {

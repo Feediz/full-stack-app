@@ -10,24 +10,21 @@ class CourseDetail extends Component {
 
   componentDidMount() {
     const { context } = this.props;
-    const authorInfo = context.authenticatedUser;
-    let author = null;
-    if (authorInfo) {
-      author = authorInfo.firstName + " " + authorInfo.lastName;
-    }
 
     context.apiData
       .getCourse(this.props.match.params.id)
       .then((course) => {
-        if (course) {
+        if (course && course !== "Not found") {
           this.setState({
             courseDetail: course,
-            author,
+            author: course.user.firstName + " " + course.user.lastName,
           });
+        } else {
+          console.log("Course not found");
+          this.props.history.push("/notfound");
         }
       })
       .catch((error) => {
-        console.log("CourseDetail.js");
         console.dir(error);
         this.setState({ errors: error });
         this.props.history.push("/error");
@@ -35,6 +32,7 @@ class CourseDetail extends Component {
   }
 
   render() {
+    const { author, courseDetail } = this.state;
     return (
       <div>
         <div className="actions--bar">
@@ -43,14 +41,11 @@ class CourseDetail extends Component {
               <span>
                 <Link
                   className="button"
-                  to={`/courses/${this.state.courseDetail.id}/update`}
+                  to={`/courses/${courseDetail.id}/update`}
                 >
                   Update Course
                 </Link>
-                <Link
-                  className="button"
-                  to={`/courses/${this.state.courseDetail.id}`}
-                >
+                <Link className="button" to={`/courses/${courseDetail.id}`}>
                   Delete Course
                 </Link>
               </span>
@@ -64,11 +59,11 @@ class CourseDetail extends Component {
           <div className="grid-66">
             <div className="course--header">
               <h4 className="course--label">Course</h4>
-              <h3 className="course--title">{this.state.courseDetail.title}</h3>
-              <p>By {this.state.author}</p>
+              <h3 className="course--title">{courseDetail.title}</h3>
+              <p>By {author}</p>
             </div>
             <div className="course--description">
-              <p>{this.state.courseDetail.description}</p>
+              <p>{courseDetail.description}</p>
             </div>
           </div>
 
@@ -77,11 +72,11 @@ class CourseDetail extends Component {
               <ul className="course--stats--list">
                 <li className="course--stats--list--item">
                   <h4>Estimated Time</h4>
-                  <h3>{this.state.courseDetail.estimatedTime}</h3>
+                  <h3>{courseDetail.estimatedTime}</h3>
                 </li>
                 <li className="course--stats--list--item">
                   <h4>Materials Needed</h4>
-                  <ul>{this.state.courseDetail.materialsNeeded}</ul>
+                  <ul>{courseDetail.materialsNeeded}</ul>
                 </li>
               </ul>
             </div>
