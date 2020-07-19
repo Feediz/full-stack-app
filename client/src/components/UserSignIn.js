@@ -75,7 +75,7 @@ class UserSignIn extends Component {
       .then((user) => {
         if (user === null) {
           this.setState(() => {
-            return { errors: ["Signdsf-in was unsuccessful"] };
+            return { errors: ["Sign-in was unsuccessful"] };
           });
         } else {
           console.log(`Success! ${emailAddress} is now signed in.`);
