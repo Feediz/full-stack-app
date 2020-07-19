@@ -34,14 +34,7 @@ export default (props) => {
 function ErrorsDisplay({ errors }) {
   let errorsDisplay = null;
 
-  console.log("IN ERROR FORM.JS");
-  console.dir(typeof errors);
-  console.dir(errors.length);
-
-  // if (errors.length > 0 || !errors.isEmpty()) {
   if (errors.length > 0) {
-    console.log("IN ERROR FORM.JS");
-    console.dir(errors);
     errorsDisplay = (
       <div>
         <h2 className="validation--errors--label">Validation errors</h2>

@@ -71,8 +71,9 @@ export default class ApiData {
       password,
     });
     console.log(`sadlfjalsdfkjadlsfj: ${response.status}`);
-    if (response.status === 200) {
-      return response.json().then((data) => data);
+    if (response.status === 204) {
+      // return response.json().then((data) => data);
+      return null;
     } else if (response.status === 401) {
       return null;
     } else if (response.status === 403) {
@@ -90,8 +91,9 @@ export default class ApiData {
       username,
       password,
     });
-    if (response.status === 200) {
-      return response.json().then((data) => data);
+    if (response.status === 201) {
+      // return response.json().then((data) => data);
+      return null;
     } else if (response.status === 401) {
       return null;
     } else {

@@ -7,8 +7,21 @@ class CreateCourse extends Component {
     description: "",
     estimatedTime: "",
     materialsNeeded: "",
+    author: "",
     errors: [],
   };
+  componentDidMount() {
+    const { context } = this.props;
+    const authorInfo = context.authenticatedUser;
+    let author = null;
+
+    if (authorInfo) {
+      author = `${authorInfo.firstName} ${authorInfo.lastName}`;
+    }
+    this.setState({
+      author,
+    });
+  }
   render() {
     const {
       title,
@@ -16,6 +29,7 @@ class CreateCourse extends Component {
       estimatedTime,
       materialsNeeded,
       errors,
+      author,
     } = this.state;
 
     let _estimatedTime = estimatedTime ? estimatedTime : "";
@@ -42,7 +56,7 @@ class CreateCourse extends Component {
                   onChange={this.change}
                   value={title}
                 />
-                <p>By Joe Smith</p>
+                <p>By {author}</p>
               </div>
 
               <div className="course--description">
@@ -112,8 +126,14 @@ class CreateCourse extends Component {
 
     context.apiData
       .createCourse(courseDetail, userDetail)
-      .then(() => {
-        console.log(`Course added`);
+      .then((errors) => {
+        if (errors) {
+          console.log(`There is an error: ${errors}`);
+          this.setState({ errors: errors });
+        } else {
+          console.log(`Course added`);
+          this.props.history.push("/courses");
+        }
       })
       .catch((err) => {
         console.error(err);

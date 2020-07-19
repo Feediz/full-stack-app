@@ -14,12 +14,6 @@ class UpdateCourse extends Component {
 
   componentDidMount() {
     const { context } = this.props;
-    const authorInfo = context.authenticatedUser;
-    let author = null;
-
-    if (authorInfo) {
-      author = `${authorInfo.firstName} ${authorInfo.lastName}`;
-    }
 
     context.apiData
       .getCourse(this.props.match.params.id)
@@ -32,7 +26,7 @@ class UpdateCourse extends Component {
             estimatedTime: course.estimatedTime,
             materialsNeeded: course.materialsNeeded,
             userId: course.userId,
-            author,
+            author: course.user.firstName + " " + course.user.lastName,
           });
         }
       })
@@ -147,18 +141,16 @@ class UpdateCourse extends Component {
       materialsNeeded,
       userId,
     };
-    console.log("UpdateCourse");
-    console.dir(courseDetail);
     const userDetail = context.authenticatedUser;
 
     context.apiData
       .updateCourse(id, courseDetail, userDetail)
       .then((errors) => {
         if (errors) {
-          console.log(`There is an error | ${errors.message}`);
-          this.setState({ errors });
+          console.log(`There is an error | ${errors.errors}`);
+          this.setState({ errors: errors.errors });
         } else {
-          console.log(`Course updated | ${errors}`);
+          console.log(`Course updated`);
           this.props.history.push(`/courses/${id}`);
         }
       })
