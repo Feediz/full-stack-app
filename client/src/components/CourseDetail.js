@@ -1,10 +1,14 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
+import ActionButtons from "./ActionButtons";
+
 class CourseDetail extends Component {
   state = {
     courseDetail: [],
+    authenticatedUserEmail: "",
     author: "",
+    courseOwnerEmail: "",
     errors: [],
   };
 
@@ -18,6 +22,8 @@ class CourseDetail extends Component {
           this.setState({
             courseDetail: course,
             author: course.user.firstName + " " + course.user.lastName,
+            courseOwnerEmail: course.user.emailAddress,
+            authenticatedUserEmail: context.authenticatedUser.emailAddress,
           });
         } else {
           console.log("Course not found");
@@ -32,23 +38,23 @@ class CourseDetail extends Component {
   }
 
   render() {
-    const { author, courseDetail } = this.state;
+    const {
+      author,
+      courseDetail,
+      authenticatedUserEmail,
+      courseOwnerEmail,
+    } = this.state;
     return (
       <div>
         <div className="actions--bar">
           <div className="bounds">
             <div className="grid-100">
-              <span>
-                <Link
-                  className="button"
-                  to={`/courses/${courseDetail.id}/update`}
-                >
-                  Update Course
-                </Link>
-                <Link className="button" to={`/courses/${courseDetail.id}`}>
-                  Delete Course
-                </Link>
-              </span>
+              <ActionButtons
+                id={courseDetail.id}
+                authEmail={authenticatedUserEmail}
+                courseEmail={courseOwnerEmail}
+                deleteFunction={this.deleteCourse}
+              />
               <Link className="button button-secondary" to="/">
                 Return to List
               </Link>
@@ -85,6 +91,22 @@ class CourseDetail extends Component {
       </div>
     );
   }
+  deleteCourse = () => {
+    const { context } = this.props;
+    const id = this.state.courseDetail.id;
+    const userDetail = context.authenticatedUser;
+
+    context.apiData.deleteCourse(id, userDetail).then((errors) => {
+      if (errors) {
+        console.error(`Error: ${errors}`);
+        this.setState({ errors });
+      } else {
+        console.log("Course deleted!");
+        this.props.history.push(`/courses`);
+      }
+    });
+    console.log("NEEW DELETE");
+  };
 }
 
 export default CourseDetail;

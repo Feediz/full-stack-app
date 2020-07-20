@@ -61,6 +61,28 @@ export default class ApiData {
     }
   }
 
+  async deleteCourse(id, userDetail) {
+    if (id && !isNaN(id)) {
+      const username = userDetail.emailAddress;
+      const password = cryptr.decrypt(userDetail.p);
+
+      const response = await this.api(`/courses/${id}`, "DELETE", null, true, {
+        username,
+        password,
+      });
+      if (response.status === 204) {
+        // return await response.json().then((data) => data);
+        return null;
+      } else if (response.status === 403) {
+        return null;
+      } else if (response.status === 404) {
+        return "Not found";
+      } else {
+        throw new Error();
+      }
+    }
+  }
+
   async updateCourse(id, newData, userDetail) {
     const username = userDetail.emailAddress;
     const password = cryptr.decrypt(userDetail.p);
