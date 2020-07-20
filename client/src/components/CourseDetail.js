@@ -18,12 +18,16 @@ class CourseDetail extends Component {
     context.apiData
       .getCourse(this.props.match.params.id)
       .then((course) => {
+        let authEmail = "";
+        if (context.authenticatedUser !== null) {
+          authEmail = context.authenticatedUser.emailAddress;
+        }
         if (course && course !== "Not found") {
           this.setState({
             courseDetail: course,
             author: course.user.firstName + " " + course.user.lastName,
             courseOwnerEmail: course.user.emailAddress,
-            authenticatedUserEmail: context.authenticatedUser.emailAddress,
+            authenticatedUserEmail: authEmail,
           });
         } else {
           console.log("Course not found");
@@ -44,6 +48,7 @@ class CourseDetail extends Component {
       authenticatedUserEmail,
       courseOwnerEmail,
     } = this.state;
+
     return (
       <div>
         <div className="actions--bar">
@@ -96,12 +101,15 @@ class CourseDetail extends Component {
     const id = this.state.courseDetail.id;
     const userDetail = context.authenticatedUser;
 
+    // const { addToast } = useToasts();
+
     context.apiData.deleteCourse(id, userDetail).then((errors) => {
       if (errors) {
         console.error(`Error: ${errors}`);
         this.setState({ errors });
       } else {
         console.log("Course deleted!");
+        context.msg = "Course deleted";
         this.props.history.push(`/courses`);
       }
     });

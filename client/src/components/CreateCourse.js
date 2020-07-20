@@ -127,9 +127,12 @@ class CreateCourse extends Component {
     context.apiData
       .createCourse(courseDetail, userDetail)
       .then((errors) => {
-        if (errors) {
+        if (errors.length) {
           console.log(`There is an error: ${errors}`);
-          this.setState({ errors: errors });
+          this.setState({ errors });
+          // this.setState(() => {
+          //   return { errors };
+          // });
         } else {
           console.log(`Course added`);
           this.props.history.push("/courses");

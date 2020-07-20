@@ -18,6 +18,7 @@ export class Provider extends Component {
 
   render() {
     const { authenticatedUser } = this.state;
+
     const value = {
       authenticatedUser,
       apiData: this.apiData,
@@ -25,12 +26,17 @@ export class Provider extends Component {
       actions: {
         signIn: this.signIn,
         signOut: this.signOut,
+        showNotification: this.createNotification,
       },
     };
     return (
       <Context.Provider value={value}>{this.props.children}</Context.Provider>
     );
   }
+
+  createNotification = (type, message, title) => {
+    return "kjasdfksadjfh";
+  };
 
   signIn = async (emailAddress, password) => {
     const user = await this.apiData.getUser(emailAddress, password);

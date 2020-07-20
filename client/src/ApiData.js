@@ -116,6 +116,10 @@ export default class ApiData {
     if (response.status === 201) {
       // return response.json().then((data) => data);
       return null;
+    } else if (response.status === 400) {
+      return response.json().then((data) => {
+        return data.errors;
+      });
     } else if (response.status === 401) {
       return null;
     } else {
