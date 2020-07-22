@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import Form from "./Form";
 
+/**
+ * component to update course info
+ */
 class UpdateCourse extends Component {
   state = {
     title: "",
@@ -17,6 +20,7 @@ class UpdateCourse extends Component {
     const { context } = this.props;
     const authenticatedUserEmail = context.authenticatedUser.emailAddress;
 
+    // call rest api to get course data by course id
     context.apiData
       .getCourse(this.props.match.params.id)
       .then((course) => {
@@ -25,6 +29,7 @@ class UpdateCourse extends Component {
           return null;
         }
 
+        // if we find the course then we set that data in the state
         if (course && course !== "Not found") {
           this.setState({
             courseDetail: course,
@@ -37,6 +42,7 @@ class UpdateCourse extends Component {
             author: course.user.firstName + " " + course.user.lastName,
           });
         } else {
+          // if no data then redirect user to not found page
           console.log("Course not found");
           this.props.history.push("/notfound");
         }
@@ -57,6 +63,7 @@ class UpdateCourse extends Component {
       materialsNeeded,
     } = this.state;
 
+    // set variables for the estimated time and materials needed fields
     let _estimatedTime = estimatedTime ? estimatedTime : "";
     let _materialsNeeded = materialsNeeded ? materialsNeeded : "";
 
@@ -128,6 +135,7 @@ class UpdateCourse extends Component {
     );
   }
 
+  // on change event handler set state with field values
   change = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -139,6 +147,7 @@ class UpdateCourse extends Component {
     });
   };
 
+  // handle submit button
   submit = () => {
     const { context } = this.props;
     let { title, description, estimatedTime, materialsNeeded } = this.state;
@@ -171,6 +180,7 @@ class UpdateCourse extends Component {
       });
   };
 
+  // handle request cancel
   cancel = () => {
     this.props.history.push("/");
   };

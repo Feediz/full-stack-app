@@ -1,5 +1,9 @@
 import React from "react";
 
+/**
+ * generic component to display server error page
+ * @param {object} props
+ */
 const UnhandledError = (props) => {
   return (
     <div className="bounds">

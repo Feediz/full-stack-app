@@ -3,11 +3,13 @@ import React from "react";
 export default (props) => {
   const { cancel, errors, submit, submitButtonText, elements } = props;
 
+  // handle submit button
   function handleSubmit(e) {
     e.preventDefault();
     submit();
   }
 
+  // handle cancel request
   function handleCancel(e) {
     e.preventDefault();
     cancel();
@@ -31,6 +33,10 @@ export default (props) => {
   );
 };
 
+/**
+ *
+ * @param {array} errors
+ */
 function ErrorsDisplay({ errors }) {
   let errorsDisplay = null;
 

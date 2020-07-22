@@ -1,6 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+/**
+ * header component
+ * @param {object} props
+ */
 const Header = (props) => {
   const { context } = props;
   const authUser = context.authenticatedUser;

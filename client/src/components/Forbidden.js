@@ -1,5 +1,9 @@
 import React from "react";
 
+/**
+ * generic component to display permission denied page
+ * @param {object} props
+ */
 const Forbidden = (props) => {
   return (
     <div className="bounds">

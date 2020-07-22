@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
+/**
+ * Retrieves list of courses and displays them
+ */
 class Courses extends Component {
   state = {
     courses: [],
@@ -10,6 +13,7 @@ class Courses extends Component {
   componentDidMount() {
     const { context } = this.props;
 
+    // call api and try to retrieve all courses
     context.apiData
       .getCourses()
       .then((courses) => {
@@ -18,32 +22,13 @@ class Courses extends Component {
         }
       })
       .catch((error) => {
+        // if we have a server error redirect user to error page
         console.error(error);
         this.props.history.push("/error");
       });
   }
   render() {
-    function getUrlVars() {
-      var vars = [],
-        hash;
-      var hashes = window.location.href
-        .slice(window.location.href.indexOf("?") + 1)
-        .split("&");
-      for (var i = 0; i < hashes.length; i++) {
-        hash = hashes[i].split("=");
-        vars.push(hash[0]);
-        vars[hash[0]] = hash[1];
-      }
-      return vars;
-    }
-
-    let q = getUrlVars().msg;
-
-    if (q === "deleted") {
-      //context.actions.showNotification("success", "alsdkfjasdl", "title");
-      console.log("MSGasdfasdfsdf: " + q);
-    }
-
+    // set up display markup for courses list
     const allCourses = this.state.courses.map((course) => (
       <div className="grid-33" key={course.id}>
         <Link

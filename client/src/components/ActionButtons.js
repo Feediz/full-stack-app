@@ -1,6 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+/**
+ * Helper component to display/hide update and delete buttons in coursedetail component
+ * @param {*} props
+ */
 const ActionButtons = (props) => {
   const { id, courseEmail, authEmail, deleteFunction } = props;
   let updateLink,

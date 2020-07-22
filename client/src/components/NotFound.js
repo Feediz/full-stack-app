@@ -1,5 +1,9 @@
 import React from "react";
 
+/**
+ * generic component to display page/resource not found page
+ * @param {object} props
+ */
 const NotFound = (props) => {
   return (
     <div className="bounds">

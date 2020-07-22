@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Form from "./Form";
 
+/**
+ * component to show login page
+ */
 class UserSignIn extends Component {
   state = {
     emailAddress: "",
@@ -53,6 +56,7 @@ class UserSignIn extends Component {
     );
   }
 
+  // on change event handler set state with field values
   change = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -64,6 +68,7 @@ class UserSignIn extends Component {
     });
   };
 
+  // handle submit button
   submit = () => {
     const { context } = this.props;
     const { from } = this.props.location.state || {
@@ -88,6 +93,7 @@ class UserSignIn extends Component {
       });
   };
 
+  // handle cancel request
   cancel = () => {
     this.props.history.push("/");
   };

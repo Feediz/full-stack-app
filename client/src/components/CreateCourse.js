@@ -124,15 +124,13 @@ class CreateCourse extends Component {
 
     const userDetail = context.authenticatedUser;
 
+    // create course
     context.apiData
       .createCourse(courseDetail, userDetail)
       .then((errors) => {
         if (errors.length) {
           console.log(`There is an error: ${errors}`);
           this.setState({ errors });
-          // this.setState(() => {
-          //   return { errors };
-          // });
         } else {
           console.log(`Course added`);
           this.props.history.push("/courses");
@@ -144,6 +142,7 @@ class CreateCourse extends Component {
       });
   };
 
+  // handle cancel request
   cancel = () => {
     this.props.history.push("/");
   };

@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Form from "./Form";
 
+/**
+ * user sign up component
+ */
 class UserSignUp extends Component {
   state = {
     firstName: "",
@@ -95,6 +98,8 @@ class UserSignUp extends Component {
       </div>
     );
   }
+
+  // on change event handler set state with field values
   change = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -106,6 +111,7 @@ class UserSignUp extends Component {
     });
   };
 
+  // handle form submit
   submit = () => {
     const { context } = this.props;
     const {
@@ -143,6 +149,7 @@ class UserSignUp extends Component {
       });
   };
 
+  // handle cancel request
   cancel = () => {
     this.props.history.push("/");
   };
