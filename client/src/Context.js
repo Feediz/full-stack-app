@@ -34,10 +34,6 @@ export class Provider extends Component {
     );
   }
 
-  createNotification = (type, message, title) => {
-    return "kjasdfksadjfh";
-  };
-
   signIn = async (emailAddress, password) => {
     const user = await this.apiData.getUser(emailAddress, password);
     if (user !== null) {

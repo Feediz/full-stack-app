@@ -1,8 +1,12 @@
 import config from "./config";
 import Cryptr from "cryptr";
 
+// key to encrypt/decrypt
 const cryptr = new Cryptr("846F7A254644FA21D9B1D844BA8E7");
 
+/**
+ * component to handle api calls
+ */
 export default class ApiData {
   api(
     path,
@@ -35,6 +39,7 @@ export default class ApiData {
     return fetch(url, options);
   }
 
+  // handle api call to get all courses
   async getCourses() {
     const response = await this.api(`/courses`, "GET", null);
     if (response.status === 200) {
@@ -46,6 +51,7 @@ export default class ApiData {
     }
   }
 
+  // handle api call to get course by id
   async getCourse(id) {
     if (id && !isNaN(id)) {
       const response = await this.api(`/courses/${id}`, "GET", null);
@@ -61,6 +67,7 @@ export default class ApiData {
     }
   }
 
+  // handle api call to delete course by id
   async deleteCourse(id, userDetail) {
     if (id && !isNaN(id)) {
       const username = userDetail.emailAddress;
@@ -71,7 +78,6 @@ export default class ApiData {
         password,
       });
       if (response.status === 204) {
-        // return await response.json().then((data) => data);
         return null;
       } else if (response.status === 403) {
         return null;
@@ -83,6 +89,7 @@ export default class ApiData {
     }
   }
 
+  // handle api call to update course details
   async updateCourse(id, newData, userDetail) {
     const username = userDetail.emailAddress;
     const password = cryptr.decrypt(userDetail.p);
@@ -105,6 +112,7 @@ export default class ApiData {
     }
   }
 
+  // handle api call to create new course
   async createCourse(newData, userData) {
     const username = userData.emailAddress;
     const password = cryptr.decrypt(userData.p);
@@ -127,6 +135,7 @@ export default class ApiData {
     }
   }
 
+  // handle api call to get user data
   async getUser(username, password) {
     const response = await this.api(`/users`, "GET", null, true, {
       username,
@@ -141,6 +150,7 @@ export default class ApiData {
     }
   }
 
+  // handle api call to create user account
   async createUser(user) {
     const response = await this.api("/users", "POST", user);
     if (response.status === 201) {
