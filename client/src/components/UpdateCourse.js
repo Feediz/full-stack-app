@@ -24,7 +24,11 @@ class UpdateCourse extends Component {
     context.apiData
       .getCourse(this.props.match.params.id)
       .then((course) => {
-        if (course && course.user.emailAddress !== authenticatedUserEmail) {
+        if (
+          course &&
+          course !== "Not found" &&
+          course.user.emailAddress !== authenticatedUserEmail
+        ) {
           this.props.history.push("/forbidden");
           return null;
         }

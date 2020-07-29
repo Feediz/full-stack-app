@@ -72,7 +72,7 @@ class UserSignIn extends Component {
   submit = () => {
     const { context } = this.props;
     const { from } = this.props.location.state || {
-      from: { pathname: "/authenticated" },
+      from: { pathname: "/" },
     };
     const { emailAddress, password } = this.state;
     context.actions

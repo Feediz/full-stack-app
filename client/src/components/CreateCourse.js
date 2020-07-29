@@ -128,7 +128,7 @@ class CreateCourse extends Component {
     context.apiData
       .createCourse(courseDetail, userDetail)
       .then((errors) => {
-        if (errors.length) {
+        if (errors) {
           console.log(`There is an error: ${errors}`);
           this.setState({ errors });
         } else {
