@@ -17,6 +17,9 @@ class CourseDetail extends Component {
     errors: [],
   };
 
+  /**
+   * When component loads grab course details from rest api
+   */
   componentDidMount() {
     const { context } = this.props;
 

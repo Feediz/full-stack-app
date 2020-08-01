@@ -10,6 +10,9 @@ class Courses extends Component {
     errors: [],
   };
 
+  /**
+   * When component loads grab list of courses from rest api
+   */
   componentDidMount() {
     const { context } = this.props;
 
@@ -30,7 +33,7 @@ class Courses extends Component {
   render() {
     // set up display markup for courses list
     const allCourses = this.state.courses.map((course) => (
-      <div className="grid-33" key={course.id}>
+      <div className="grid-33 item" key={course.id}>
         <Link
           className="course--module course--link"
           to={`/courses/${course.id}`}

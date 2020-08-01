@@ -34,7 +34,7 @@ export default (props) => {
 };
 
 /**
- *
+ * Handles display of error html
  * @param {array} errors
  */
 function ErrorsDisplay({ errors }) {

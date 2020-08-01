@@ -2,6 +2,7 @@ import config from "./config";
 import Cryptr from "cryptr";
 
 // key to encrypt/decrypt
+// This is used to encrypt user password in session
 const cryptr = new Cryptr("846F7A254644FA21D9B1D844BA8E7");
 
 /**
