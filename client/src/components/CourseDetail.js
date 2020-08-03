@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 
 // update and delete buttons
 import ActionButtons from "./ActionButtons";
@@ -90,7 +91,9 @@ class CourseDetail extends Component {
               <p>By {author}</p>
             </div>
             <div className="course--description">
-              <p>{courseDetail.description}</p>
+              <p>
+                <ReactMarkdown>{courseDetail.description}</ReactMarkdown>
+              </p>
             </div>
           </div>
 
@@ -103,7 +106,11 @@ class CourseDetail extends Component {
                 </li>
                 <li className="course--stats--list--item">
                   <h4>Materials Needed</h4>
-                  <ul>{courseDetail.materialsNeeded}</ul>
+                  <ul>
+                    <ReactMarkdown>
+                      {courseDetail.materialsNeeded}
+                    </ReactMarkdown>
+                  </ul>
                 </li>
               </ul>
             </div>
@@ -125,17 +132,23 @@ class CourseDetail extends Component {
     const userDetail = context.authenticatedUser;
 
     // delete course
-    context.apiData.deleteCourse(id, userDetail).then((errors) => {
-      // if we have errors, we set the errors state variables
-      if (errors) {
-        console.error(`Error: ${errors}`);
-        this.setState({ errors });
-      } else {
-        // if course is deleted, we redirect user to home page
-        console.log("Course deleted!");
-        this.props.history.push(`/courses`);
-      }
-    });
+    context.apiData
+      .deleteCourse(id, userDetail)
+      .then((errors) => {
+        // if we have errors, we set the errors state variables
+        if (errors) {
+          console.error(`Error: ${errors}`);
+          this.setState({ errors });
+        } else {
+          // if course is deleted, we redirect user to home page
+          console.log("Course deleted!");
+          this.props.history.push(`/courses`);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        this.props.history.push("/error");
+      });
   };
 }
 

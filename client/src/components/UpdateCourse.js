@@ -85,56 +85,66 @@ class UpdateCourse extends Component {
             submitButtonText="Update Course"
             elements={() => (
               <React.Fragment>
-                <input
-                  id="title"
-                  name="title"
-                  type="text"
-                  onChange={this.change}
-                  className="input-title course--title--input"
-                  placeholder="Course title..."
-                  value={title}
-                />
+                <div className="grid-66">
+                  <h4 className="course--label">Course</h4>
+                  <div>
+                    <input
+                      id="title"
+                      name="title"
+                      type="text"
+                      onChange={this.change}
+                      className="input-title course--title--input"
+                      placeholder="Course title..."
+                      value={title}
+                    />
+                  </div>
+                  <p>By {author}</p>
+                  <div class="course--description">
+                    <div>
+                      <textarea
+                        id="description"
+                        name="description"
+                        onChange={this.change}
+                        className=""
+                        placeholder="Course description..."
+                        value={description}
+                      />
+                    </div>
+                  </div>
+                </div>
 
-                <p>By {author}</p>
-
-                <textarea
-                  id="description"
-                  name="description"
-                  onChange={this.change}
-                  className=""
-                  placeholder="Course description..."
-                  value={description}
-                />
-                <div className="course--stats">
-                  <ul className="course--stats--list">
-                    <li className="course--stats--list--item">
-                      <h4>Estimated Time</h4>
-                      <div>
-                        <input
-                          id="estimatedTime"
-                          name="estimatedTime"
-                          onChange={this.change}
-                          type="text"
-                          className="course--time--input"
-                          placeholder="Hours"
-                          value={_estimatedTime}
-                        />
-                      </div>
-                    </li>
-                    <li className="course--stats--list--item">
-                      <h4>Materials Needed</h4>
-                      <div>
-                        <textarea
-                          id="materialsNeeded"
-                          name="materialsNeeded"
-                          onChange={this.change}
-                          className=""
-                          placeholder="List materials..."
-                          value={_materialsNeeded}
-                        />
-                      </div>
-                    </li>
-                  </ul>
+                <div class="grid-25 grid-right">
+                  <div className="course--stats">
+                    <ul className="course--stats--list">
+                      <li className="course--stats--list--item">
+                        <h4>Estimated Time</h4>
+                        <div>
+                          <input
+                            id="estimatedTime"
+                            name="estimatedTime"
+                            onChange={this.change}
+                            type="text"
+                            className="course--time--input"
+                            placeholder="Hours"
+                            value={_estimatedTime}
+                          />
+                        </div>
+                      </li>
+                      <li className="course--stats--list--item">
+                        <h4>Materials Needed</h4>
+                        <div>
+                          <textarea
+                            id="materialsNeeded"
+                            name="materialsNeeded"
+                            onChange={this.change}
+                            className=""
+                            placeholder="List materials..."
+                            value={_materialsNeeded}
+                          />
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </React.Fragment>
             )}
@@ -191,7 +201,8 @@ class UpdateCourse extends Component {
 
   // handle request cancel
   cancel = () => {
-    this.props.history.push("/");
+    let id = this.state.courseDetail.id;
+    this.props.history.push(`/courses/${id}`);
   };
 }
 
